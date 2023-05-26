@@ -9,12 +9,13 @@ const { Server } = require("socket.io");
 const io = new Server(expressServer);
 
 io.on("connection", (socket) => {
-    console.log("New User Connection");
+    socket.join("kitchen-room");
+    io.sockets.in("kitchen-room").emit("cooking", "Fried Rice Cooking");
+    io.sockets.in("kitchen-room").emit("boiling", "Boiling water");
 
-    socket.on("chat", (data) => {
-        // This io.emit will broadcast
-        io.emit("chat_send", data);
-    });
+    socket.join("bed-room");
+    io.sockets.in("bed-room").emit("sleeping", "I am sleeping");
+    io.sockets.in("bed-room").emit("resting", "I am resting");
 });
 
 app.get("/", (req, res) => {

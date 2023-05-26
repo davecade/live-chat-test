@@ -10,6 +10,11 @@ const io = new Server(expressServer);
 
 io.on("connection", (socket) => {
     console.log("New User Connection");
+
+    socket.on("chat", (data) => {
+        // This io.emit will broadcast
+        io.emit("chat_send", data);
+    });
 });
 
 app.get("/", (req, res) => {

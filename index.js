@@ -8,6 +8,10 @@ const { Server } = require("socket.io");
 
 const io = new Server(expressServer);
 
+io.on("connection", (socket) => {
+    console.log("New User Connection");
+});
+
 app.get("/", (req, res) => {
     res.sendFile(__dirname + "/index.html");
 });

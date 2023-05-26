@@ -10,9 +10,17 @@ const io = new Server(expressServer);
 
 io.on("connection", (socket) => {
     socket.join("kitchen-room");
-    io.sockets.in("kitchen-room").emit("cooking", "Fried Rice Cooking");
+
+    // getting size of kitchen you have to access it like this
+    let sizeOfKitchen = io.sockets.adapter.rooms.get("kitchen-room").size;
+
+    // Kitchen Room
+    io.sockets
+        .in("kitchen-room")
+        .emit("cooking", "Fried Rice Cooking = " + sizeOfKitchen);
     io.sockets.in("kitchen-room").emit("boiling", "Boiling water");
 
+    // Bedroom
     socket.join("bed-room");
     io.sockets.in("bed-room").emit("sleeping", "I am sleeping");
     io.sockets.in("bed-room").emit("resting", "I am resting");
